@@ -125,9 +125,8 @@ class _ContactListState extends TIMUIKitState<ContactList> {
     final isDesktopScreen = TUIKitScreenUtils.getFormFactor(context) == DeviceType.Desktop;
 
     return Container(
-      padding: const EdgeInsets.only(top: 8, left: 16, right: 12),
-      decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(color: theme.weakDividerColor ?? CommonColor.weakDividerColor))),
+      padding: const EdgeInsets.only(top: 12, left: 16, right: 12),
+      color: const Color(0xFFFFFFFF),
       child: Row(
         children: [
           if (widget.isCanSelectMemberItem)
@@ -158,9 +157,9 @@ class _ContactListState extends TIMUIKitState<ContactList> {
             padding: const EdgeInsets.only(bottom: 12),
             margin: const EdgeInsets.only(right: 12),
             child: SizedBox(
-              height: isDesktopScreen ? 30 : 40,
-              width: isDesktopScreen ? 30 : 40,
-              child: Avatar(onlineStatus: onlineStatus, faceUrl: faceUrl, showName: showName),
+              height: isDesktopScreen ? 30 : 46,
+              width: isDesktopScreen ? 30 : 46,
+              child: Avatar(onlineStatus: onlineStatus, faceUrl: faceUrl, showName: showName, borderRadius: BorderRadius.circular(24)),
             ),
           ),
           Expanded(
@@ -169,7 +168,7 @@ class _ContactListState extends TIMUIKitState<ContactList> {
             padding: const EdgeInsets.only(top: 10, bottom: 20, right: 28),
             child: Text(
               showName,
-              style: TextStyle(color: Colors.black, fontSize: isDesktopScreen ? 14 : 18),
+              style: TextStyle(color: const Color(0xFF333333), fontSize: isDesktopScreen ? 14 : 14),
             ),
           )),
         ],
@@ -259,11 +258,7 @@ class _ContactListState extends TIMUIKitState<ContactList> {
           return generateTopItem(memberInfo);
         } else {
           return Material(
-            color: (isDesktopScreen)
-                ? (widget.currentItem == memberInfo.userProfile.userID
-                    ? theme.conversationItemChooseBgColor
-                    : widget.bgColor)
-                : null,
+            color: const Color(0xFFF9F9F9),
             child: InkWell(
               onTap: () {
                 if (widget.isCanSelectMemberItem) {

@@ -103,14 +103,15 @@ class TIMUIKitConversationItem extends TIMUIKitStatelessWidget {
     final TUITheme theme = value.theme;
     final isDesktopScreen = TUIKitScreenUtils.getFormFactor(context) == DeviceType.Desktop;
     return Container(
-      padding: const EdgeInsets.only(top: 6, bottom: 6, left: 16, right: 16),
+      padding: const EdgeInsets.only(top: 12, bottom: 8, left: 16, right: 16),
       decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: theme.conversationItemBorderColor ?? CommonColor.weakDividerColor,
-            width: 1,
-          ),
-        ),
+        color: const Color(0xFFF9F9F9), // 添加背景色
+        // border: Border(
+        //   bottom: BorderSide(
+        //     color: theme.conversationItemBorderColor ?? CommonColor.weakDividerColor,
+        //     width: 1,
+        //   ),
+        // ),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -118,13 +119,13 @@ class TIMUIKitConversationItem extends TIMUIKitStatelessWidget {
           Container(
             padding: const EdgeInsets.only(top: 0, bottom: 2, right: 0),
             child: SizedBox(
-              width: isDesktopScreen ? 40 : 44,
-              height: isDesktopScreen ? 40 : 44,
+              width: isDesktopScreen ? 40 : 46,
+              height: isDesktopScreen ? 40 : 46,
               child: Stack(
                 fit: StackFit.expand,
                 clipBehavior: Clip.none,
                 children: [
-                  Avatar(onlineStatus: onlineStatus, faceUrl: faceUrl, showName: nickName, type: convType),
+                  Avatar(onlineStatus: onlineStatus, faceUrl: faceUrl, showName: nickName, type: convType, borderRadius: BorderRadius.circular(24)),
                   if (unreadCount != 0)
                     Positioned(
                       top: isDisturb ? -2.5 : -4.5,
@@ -142,9 +143,18 @@ class TIMUIKitConversationItem extends TIMUIKitStatelessWidget {
           ),
           Expanded(
               child: Container(
-            height: 60,
+            height: 66,
             margin: EdgeInsets.only(left: isDesktopScreen ? 10 : 12),
             padding: const EdgeInsets.only(top: 0, bottom: 0),
+                decoration: BoxDecoration(
+                color: const Color(0xFFF9F9F9), // 添加背景色
+                border: Border(
+                    bottom: BorderSide(
+                      color: theme.conversationItemBorderColor ?? CommonColor.weakDividerColor,
+                      width: 1,
+                    ),
+                  ),
+              ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
