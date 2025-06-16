@@ -59,7 +59,7 @@ class TIMUIKitConversationItem extends TIMUIKitStatelessWidget {
 
     if (lastMsg != null || (draftText != null && draftText != "")) {
       return TIMUIKitLastMsg(
-        fontSize: isDesktopScreen ? 12 : 14,
+        fontSize: isDesktopScreen ? 12 : 12,
         groupAtInfoList: groupAtInfoList,
         lastMsg: lastMsg,
         isDisturb: isDisturb,
@@ -89,7 +89,7 @@ class TIMUIKitConversationItem extends TIMUIKitStatelessWidget {
       } else if (lastMsg != null) {
         return Text(TimeAgo().getTimeStringForChat(lastMsg!.timestamp as int) ?? "",
             style: TextStyle(
-              fontSize: 11,
+              fontSize: 12,
               color: theme.conversationItemTitmeTextColor,
             ));
       }
@@ -103,7 +103,7 @@ class TIMUIKitConversationItem extends TIMUIKitStatelessWidget {
     final TUITheme theme = value.theme;
     final isDesktopScreen = TUIKitScreenUtils.getFormFactor(context) == DeviceType.Desktop;
     return Container(
-      padding: const EdgeInsets.only(top: 12, bottom: 8, left: 16, right: 16),
+      padding: const EdgeInsets.only(top: 0, bottom: 0, left: 16, right: 16),
       decoration: BoxDecoration(
         color: const Color(0xFFF9F9F9), // 添加背景色
         // border: Border(
@@ -144,7 +144,7 @@ class TIMUIKitConversationItem extends TIMUIKitStatelessWidget {
           Expanded(
               child: Container(
             height: 66,
-            margin: EdgeInsets.only(left: isDesktopScreen ? 10 : 12),
+            margin: EdgeInsets.only(left: isDesktopScreen ? 10 : 16),
             padding: const EdgeInsets.only(top: 0, bottom: 0),
                 decoration: BoxDecoration(
                 color: const Color(0xFFF9F9F9), // 添加背景色
@@ -171,8 +171,8 @@ class TIMUIKitConversationItem extends TIMUIKitStatelessWidget {
                       style: TextStyle(
                         height: 1,
                         color: theme.conversationItemTitleTextColor,
-                        fontSize: isDesktopScreen ? 14 : 18,
-                        fontWeight: FontWeight.w400,
+                        fontSize: isDesktopScreen ? 14 : 14,
+                        fontWeight: FontWeight.w500,
                       ),
                     )),
                     _getTimeStringForChatWidget(context, theme),
