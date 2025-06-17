@@ -58,24 +58,25 @@ class _SendApplicationState extends TIMUIKitState<SendApplication> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
+              
               color: theme.white,
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-              margin: const EdgeInsets.only(bottom: 12),
+              margin: const EdgeInsets.only(bottom: 12, top: 16),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     width: 48,
                     height: 48,
-                    margin: const EdgeInsets.only(right: 12),
-                    child: Avatar(faceUrl: faceUrl, showName: showName),
+                    margin: const EdgeInsets.only(right: 16),
+                    child: Avatar(faceUrl: faceUrl, showName: showName, borderRadius: BorderRadius.all(Radius.circular(23))),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         showName,
-                        style: TextStyle(color: theme.darkTextColor, fontSize: 18),
+                        style: TextStyle(color: theme.darkTextColor, fontSize: 14),
                       ),
                       const SizedBox(
                         height: 4,
@@ -98,55 +99,60 @@ class _SendApplicationState extends TIMUIKitState<SendApplication> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 16.0),
+              padding: const EdgeInsets.only(left: 32.0),
               child: Text(
                 TIM_t("填写验证信息"),
-                style: TextStyle(fontSize: 16, color: theme.weakTextColor),
+                style: TextStyle(fontSize: 12, color: theme.weakTextColor),
               ),
             ),
             Container(
               margin: const EdgeInsets.only(top: 6, bottom: 12),
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
               color: theme.white,
               child: TextField(
                 // minLines: 1,
                 maxLines: 4,
                 controller: _verficationController,
                 keyboardType: TextInputType.multiline,
+                style: const TextStyle(fontSize: 14),
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  hintStyle: TextStyle(color: theme.textgrey),
+                  hintStyle: TextStyle(color: theme.textgrey, fontSize: 14),
                   hintText: '',
+                  
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 16.0),
+              padding: const EdgeInsets.only(left: 32.0),
               child: Text(
                 TIM_t("请填写备注"),
-                style: TextStyle(fontSize: 16, color: theme.weakTextColor),
+                style: TextStyle(fontSize: 12, color: theme.weakTextColor),
               ),
             ),
             Container(
               color: theme.white,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
               margin: const EdgeInsets.only(top: 6),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     TIM_t("备注"),
-                    style: TextStyle(color: theme.darkTextColor, fontSize: 16),
+                    style: TextStyle(color: theme.darkTextColor, fontSize: 14, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(
-                    width: 50,
+
                     child: TextField(
                       controller: _nickNameController,
+                      style: const TextStyle(fontSize: 14),
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.zero,
                         border: InputBorder.none,
                         hintStyle: TextStyle(
                           color: theme.textgrey,
+                          fontSize: 14,
                         ),
                         hintText: '',
                       ),
@@ -154,9 +160,6 @@ class _SendApplicationState extends TIMUIKitState<SendApplication> {
                   )
                 ],
               ),
-            ),
-            const Divider(
-              height: 1,
             ),
             if (widget.isShowDefaultGroup == true)
               Container(
@@ -177,9 +180,12 @@ class _SendApplicationState extends TIMUIKitState<SendApplication> {
                 ),
               ),
             Container(
-              color: theme.white,
               width: double.infinity,
-              margin: const EdgeInsets.only(top: 10),
+              margin: const EdgeInsets.only(top: 100, left: 47, right: 47),
+              decoration: BoxDecoration(
+                color: Color(0xff0072FC),
+                borderRadius: BorderRadius.circular(8),
+              ),
               child: TextButton(
                   onPressed: () async {
                     final remark = _nickNameController.text;
@@ -199,7 +205,8 @@ class _SendApplicationState extends TIMUIKitState<SendApplication> {
                         addWording: addWording,
                         friendGroup: friendGroup);
                   },
-                  child: Text(TIM_t("发送"))),
+                  child: Text(TIM_t("发送"), style: TextStyle(color: theme.white),)
+                ),
             )
           ],
         ),
@@ -216,8 +223,8 @@ class _SendApplicationState extends TIMUIKitState<SendApplication> {
         defaultWidget: Scaffold(
           appBar: AppBar(
             title: Text(
-              TIM_t("添加好友"),
-              style: TextStyle(color: theme.appbarTextColor, fontSize: 17),
+              TIM_t("添加好友1111"),
+              style: TextStyle(color: theme.appbarTextColor, fontSize: 16),
             ),
             shadowColor: theme.white,
             backgroundColor: theme.appbarBgColor ?? theme.primaryColor,
