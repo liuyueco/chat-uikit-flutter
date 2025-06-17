@@ -188,7 +188,7 @@ class _TIMUIKitAppBarState extends TIMUIKitState<TIMUIKitAppBar> {
       bottomOpacity: setAppbar?.bottomOpacity ?? 1.0,
       titleSpacing: setAppbar?.titleSpacing,
       automaticallyImplyLeading: setAppbar?.automaticallyImplyLeading ?? false,
-      shadowColor: setAppbar?.shadowColor ?? theme.weakDividerColor,
+      // shadowColor: setAppbar?.shadowColor ?? theme.weakDividerColor,
       excludeHeaderSemantics: setAppbar?.excludeHeaderSemantics ?? false,
       toolbarHeight: setAppbar?.toolbarHeight,
       titleTextStyle: setAppbar?.titleTextStyle,
@@ -196,10 +196,10 @@ class _TIMUIKitAppBarState extends TIMUIKitState<TIMUIKitAppBar> {
       toolbarTextStyle: setAppbar?.toolbarTextStyle,
 
       // textTheme: setAppbar?.textTheme,
-      iconTheme: setAppbar?.iconTheme ??
-          const IconThemeData(
-            color: Colors.white,
-          ),
+      // iconTheme: setAppbar?.iconTheme ??
+      //     const IconThemeData(
+      //       color: Colors.white,
+      //     ),
       title: TIMUIKitAppBarTitle(
         title: setAppbar?.title,
         onClick: widget.onClickTitle,

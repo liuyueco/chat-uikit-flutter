@@ -21,7 +21,7 @@ class TIMUIKitSearchIndicator extends TIMUIKitStatelessWidget {
   };
 
   Widget renderItemBox(
-      IconData icon, SearchType item, bool isSelect, TUITheme theme) {
+      dynamic icon, SearchType item, bool isSelect, TUITheme theme) {
     return InkWell(
       onTap: () {
         if (isSelect) {
@@ -40,20 +40,16 @@ class TIMUIKitSearchIndicator extends TIMUIKitStatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(6),
-                  child: Icon(
-                    icon,
-                    color: theme.weakTextColor,
-                    size: 30,
-                  ),
+                  child: icon is IconData ? Icon(icon, color: theme.weakTextColor, size: 30,) : icon,
                 ),
                 if (isSelect)
                   Positioned(
-                      right: 0,
-                      bottom: 0,
+                      right: 4,
+                      bottom: 10,
                       child: Container(
                         height: 16,
                         width: 16,
-                        decoration: BoxDecoration(shape: BoxShape.circle, color: theme.primaryColor),
+                        decoration: BoxDecoration(shape: BoxShape.circle, color: theme.primaryColor, border: Border.all(color: Colors.white, width: 1)),
                         child: const Icon(
                           Icons.check,
                           size: 8,
@@ -97,11 +93,11 @@ class TIMUIKitSearchIndicator extends TIMUIKitStatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.max,
             children: [
-              renderItemBox(Icons.person, SearchType.contact,
+              renderItemBox(Image.asset('images/person.png', package: 'tencent_cloud_chat_uikit', width: 46,height: 46,), SearchType.contact,
                   typeList.contains(SearchType.contact), theme),
-              renderItemBox(Icons.people, SearchType.group,
+              renderItemBox(Image.asset('images/people.png', package: 'tencent_cloud_chat_uikit', width: 46,height: 46,), SearchType.group,
                   typeList.contains(SearchType.group), theme),
-              renderItemBox(Icons.message, SearchType.history,
+              renderItemBox(Image.asset('images/message.png', package: 'tencent_cloud_chat_uikit', width: 46,height: 46,), SearchType.history,
                   typeList.contains(SearchType.history), theme),
             ],
           )

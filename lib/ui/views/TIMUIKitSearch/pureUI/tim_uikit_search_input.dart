@@ -57,13 +57,7 @@ class TIMUIKitSearchInputState extends TIMUIKitState<TIMUIKitSearchInput> {
       decoration: BoxDecoration(
           color: isDesktopScreen
               ? theme.wideBackgroundColor
-              : theme.primaryColor,
-          boxShadow: [
-            BoxShadow(
-              color: theme.weakBackgroundColor ?? hexToColor("E6E9EB"),
-              offset: const Offset(0.0, 2.0),
-            )
-          ]
+              : Colors.white,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -96,12 +90,13 @@ class TIMUIKitSearchInputState extends TIMUIKitState<TIMUIKitSearchInput> {
               ) : null,
               decoration: InputDecoration(
                 contentPadding: const EdgeInsets.all(0),
-                border: const OutlineInputBorder(borderSide: BorderSide.none),
+                border: const OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(20))),
                 hintStyle: TextStyle(
                   fontSize: isDesktopScreen ? 12 : 14,
                   color: hexToColor("CCCCCC"),
                 ),
-                fillColor: isDesktopScreen ? hexToColor("f3f3f4") : Colors.white,
+                
+                fillColor: isDesktopScreen ? hexToColor("f3f3f4") : Color(0xffE9E9E9),
                 filled: true,
                 isDense: true,
                 hintText: TIM_t("搜索"),
@@ -140,7 +135,7 @@ class TIMUIKitSearchInputState extends TIMUIKitState<TIMUIKitSearchInput> {
                 },
                 child: Text(TIM_t("取消"),
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: Color(0xffBBBBBB),
                     )),
               ))
         ],
