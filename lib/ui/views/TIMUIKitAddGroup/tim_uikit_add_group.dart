@@ -115,21 +115,22 @@ class _TIMUIKitAddGroupState extends TIMUIKitState<TIMUIKitAddGroup> {
       },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12),
+        color: Colors.white,
         child: Row(
           // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: isDesktopScreen ? 38 : 48,
-              height: isDesktopScreen ? 38 : 48,
+              width: isDesktopScreen ? 38 : 46,
+              height: isDesktopScreen ? 38 : 46,
               margin: const EdgeInsets.only(right: 16),
-              child: Avatar(faceUrl: faceUrl, showName: showName),
+              child: Avatar(faceUrl: faceUrl, showName: showName, borderRadius: BorderRadius.all(Radius.circular(23))),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   showName,
-                  style: TextStyle(fontSize: isDesktopScreen ? 16 : 18),
+                  style: TextStyle(fontSize: isDesktopScreen ? 16 : 14, fontWeight: FontWeight.w500),
                 ),
                 Text(
                   "ID: $groupID",
@@ -235,8 +236,11 @@ class _TIMUIKitAddGroupState extends TIMUIKitState<TIMUIKitAddGroup> {
 
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        Container(
+          height: 50,
+          color: Colors.white,
+          padding:
+              const EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 16),
           child: Row(
             children: [
               Expanded(
@@ -262,25 +266,37 @@ class _TIMUIKitAddGroupState extends TIMUIKitState<TIMUIKitAddGroup> {
                   }
                 },
                 decoration: InputDecoration(
+
                     prefixIcon: Icon(
                       Icons.search_outlined,
                       color: theme.weakTextColor,
                     ),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(20),
                       borderSide: const BorderSide(
                         width: 0,
                         style: BorderStyle.none,
                       ),
                     ),
-                    contentPadding: EdgeInsets.zero,
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                    fillColor: const Color(0xffF5F5F5), // 设置背景颜色
                     hintStyle: TextStyle(
                       color: theme.weakTextColor,
                     ),
-                    fillColor: theme.inputFillColor,
                     filled: true,
                     hintText: TIM_t("搜索群ID")),
               )),
+              const SizedBox(width: 8,),
+              GestureDetector(
+                onTap: () {
+                  _controller.clear();
+                  setState(() {
+                    _controller.text = "";
+                    showResult = false;
+                  });
+                },
+                child: const Text("取消"),
+              ),
             ],
           ),
         ),
@@ -288,6 +304,7 @@ class _TIMUIKitAddGroupState extends TIMUIKitState<TIMUIKitAddGroup> {
           Expanded(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),
+              margin: const EdgeInsets.only(top: 16),
               child: SingleChildScrollView(
                 child: Column(
                   children: _searchResultBuilder(groupResult, theme),

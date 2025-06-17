@@ -234,8 +234,7 @@ class _TIMUIKitAddFriendState extends TIMUIKitState<TIMUIKitAddFriend> {
                       }
                     },
                     decoration: InputDecoration(
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 16),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                         fillColor: const Color(0xffF5F5F5), // 设置背景颜色
                         filled: true,
                         prefixIcon: Icon(
