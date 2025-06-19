@@ -102,7 +102,7 @@ class TIMUIKitSearchInputState extends TIMUIKitState<TIMUIKitSearchInput> {
                 hintText: TIM_t("搜索"),
                 prefix: widget.prefixText != null
                     ? Container(
-                        margin: const EdgeInsets.only(right: 8),
+                        margin: const EdgeInsets.only(right: 1),
                         child: ConstrainedBox(
                           constraints: BoxConstraints(
                               maxWidth:
@@ -111,7 +111,15 @@ class TIMUIKitSearchInputState extends TIMUIKitState<TIMUIKitSearchInput> {
                         ),
                       )
                     : null,
-                prefixIcon: widget.prefixIcon,
+                prefixIcon: Container(
+                    padding: const EdgeInsets.all(6.0),
+                    child: Image.asset(
+                      'images/icon_search.png',
+                      package: 'tencent_cloud_chat_uikit',
+                      width: 24,
+                      height: 24,
+                    ),
+                  ),
                 suffixIcon: isEmptyInput
                     ? null
                     : IconButton(
@@ -126,18 +134,7 @@ class TIMUIKitSearchInputState extends TIMUIKitState<TIMUIKitSearchInput> {
                       ),
               ),
             ),
-          )),
-          if(!isDesktopScreen) Container(
-              margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Text(TIM_t("取消"),
-                    style: const TextStyle(
-                      color: Color(0xffBBBBBB),
-                    )),
-              ))
+          ))
         ],
       ),
     );

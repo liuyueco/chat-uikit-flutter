@@ -5,7 +5,7 @@ class TUITheme {
     this.primaryColor = const Color(0xFF00449E),
     this.secondaryColor = const Color(0xFF147AFF),
     this.infoColor = const Color(0xFFFF9C19),
-    this.weakBackgroundColor = const Color(0xFFEDEDED),
+    this.weakBackgroundColor = const Color(0xFFF9F9F9),
     this.wideBackgroundColor = Colors.white,
     this.weakDividerColor = const Color(0xFFE5E6E9),
     this.weakTextColor = const Color(0xFF999999),
@@ -27,7 +27,7 @@ class TUITheme {
     this.selectPanelTextIconColor = const Color(0xFF37393F),
 
     /// Appbar 背景颜色
-    this.appbarBgColor = const Color(0xFFF2F3F5),
+    this.appbarBgColor = const Color(0xFFFFFFFF),
 
     /// Appbar 文字颜色
     this.appbarTextColor = const Color(0xFF010000),

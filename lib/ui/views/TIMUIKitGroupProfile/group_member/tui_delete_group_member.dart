@@ -98,7 +98,7 @@ class _DeleteGroupMemberPageState extends TIMUIKitState<DeleteGroupMemberPage> {
         defaultWidget: Scaffold(
             appBar: AppBar(
                 title: Text(
-                  TIM_t("删除群成员"),
+                  TIM_t("删除群成员111"),
                   style: TextStyle(color: theme.appbarTextColor, fontSize: 17),
                 ),
                 actions: [

@@ -223,11 +223,12 @@ class _SendApplicationState extends TIMUIKitState<SendApplication> {
         defaultWidget: Scaffold(
           appBar: AppBar(
             title: Text(
-              TIM_t("添加好友1111"),
+              TIM_t("添加好友"),
               style: TextStyle(color: theme.appbarTextColor, fontSize: 16),
             ),
             shadowColor: theme.white,
-            backgroundColor: theme.appbarBgColor ?? theme.primaryColor,
+            backgroundColor: Colors.white,
+            surfaceTintColor: Colors.white,
             iconTheme: IconThemeData(
               color: theme.appbarTextColor,
             ),

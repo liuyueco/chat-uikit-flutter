@@ -172,6 +172,7 @@ class _GroupProfileMemberListState extends TIMUIKitState<GroupProfileMemberList>
                         faceUrl: memberInfo.faceUrl ?? "",
                         showName: _getShowName(memberInfo),
                         type: 1,
+                        borderRadius: BorderRadius.circular(18),
                       ),
                     ),
                     Text(_getShowName(memberInfo), style: TextStyle(fontSize: isDesktopScreen ? 14 : 16)),
@@ -239,7 +240,7 @@ class _GroupProfileMemberListState extends TIMUIKitState<GroupProfileMemberList>
       height: susHeight,
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.only(left: 16.0),
-      color: theme.weakBackgroundColor,
+      // color: theme.weakBackgroundColor,
       alignment: Alignment.centerLeft,
       child: Text(
         tag,
@@ -270,7 +271,7 @@ class _GroupProfileMemberListState extends TIMUIKitState<GroupProfileMemberList>
     }, 300);
     final showList = _getShowList(widget.memberList);
     return Container(
-      color: isDesktopScreen ? null : theme.weakBackgroundColor,
+      color: isDesktopScreen ? null : null,
       child: SafeArea(
           child: Column(
         children: [

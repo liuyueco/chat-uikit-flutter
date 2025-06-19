@@ -105,10 +105,14 @@ class TIMUIKitSearchState extends TIMUIKitState<TIMUIKitSearch> {
                     model.searchByKey(value);
                   },
                   controller: textEditingController,
-                  prefixIcon: Icon(
-                    Icons.search,
-                    size: 16,
-                    color: hexToColor("979797"),
+                  prefixIcon: Container(
+                    padding: const EdgeInsets.all(6.0),
+                    child: Image.asset(
+                      'images/icon_search.png',
+                      package: 'tencent_cloud_chat_uikit',
+                      width: 24,
+                      height: 24,
+                    ),
                   ),
                 ),
                 Expanded(

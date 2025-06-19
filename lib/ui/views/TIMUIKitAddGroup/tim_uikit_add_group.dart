@@ -267,10 +267,15 @@ class _TIMUIKitAddGroupState extends TIMUIKitState<TIMUIKitAddGroup> {
                 },
                 decoration: InputDecoration(
 
-                    prefixIcon: Icon(
-                      Icons.search_outlined,
-                      color: theme.weakTextColor,
+                  prefixIcon: Container(
+                    padding: const EdgeInsets.all(6.0),
+                    child: Image.asset(
+                      'images/icon_search.png',
+                      package: 'tencent_cloud_chat_uikit',
+                      width: 24,
+                      height: 24,
                     ),
+                  ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
                       borderSide: const BorderSide(
@@ -287,16 +292,16 @@ class _TIMUIKitAddGroupState extends TIMUIKitState<TIMUIKitAddGroup> {
                     hintText: TIM_t("搜索群ID")),
               )),
               const SizedBox(width: 8,),
-              GestureDetector(
-                onTap: () {
-                  _controller.clear();
-                  setState(() {
-                    _controller.text = "";
-                    showResult = false;
-                  });
-                },
-                child: const Text("取消"),
-              ),
+              // GestureDetector(
+              //   onTap: () {
+              //     _controller.clear();
+              //     setState(() {
+              //       _controller.text = "";
+              //       showResult = false;
+              //     });
+              //   },
+              //   child: const Text("取消"),
+              // ),
             ],
           ),
         ),
