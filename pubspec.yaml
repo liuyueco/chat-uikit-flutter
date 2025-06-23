@@ -84,8 +84,8 @@ dev_dependencies:
   lints: ^1.0.1
 
 dependency_overrides:
-#   tencent_chat_i18n_tool:
-#     path: ../../../tencent_chat_i18n_tool
+  tencent_chat_i18n_tool:
+    path: ../tencent_chat_i18n_tool
 
 #  tencent_cloud_chat_sdk:
 #    path: ../../../../imsdk/imsdk/src/platform/flutter/tencent_cloud_chat_sdk/
