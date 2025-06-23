@@ -424,7 +424,7 @@ class _TIMUIKitTextFieldLayoutNarrowState extends TIMUIKitState<TIMUIKitTextFiel
         children: [
           _buildRepliedMessage(widget.repliedMessage),
           Container(
-            color: widget.backgroundColor ?? hexToColor("f5f5f6"),
+            color: hexToColor("fffffff"),
             child: Column(
               children: [
                 Container(
@@ -501,12 +501,17 @@ class _TIMUIKitTextFieldLayoutNarrowState extends TIMUIKitState<TIMUIKitTextFiel
                                           },
                                           textAlignVertical: TextAlignVertical.top,
                                           decoration: InputDecoration(
-                                              border: InputBorder.none,
+                                              border: OutlineInputBorder(
+                                                borderRadius: BorderRadius.circular(20),
+                                                borderSide: BorderSide.none,
+                                              ),
+                                              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                                               hintStyle: const TextStyle(
                                                 // fontSize: 10,
                                                 color: Color(0xffAEA4A3),
+                                                
                                               ),
-                                              fillColor: Colors.white,
+                                              fillColor: hexToColor("f0f0f0"),
                                               filled: true,
                                               isDense: true,
                                               hintText: widget.hintText ?? ''),

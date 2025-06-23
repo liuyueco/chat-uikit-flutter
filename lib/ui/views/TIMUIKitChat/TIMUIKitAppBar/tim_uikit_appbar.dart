@@ -257,7 +257,7 @@ class _TIMUIKitAppBarState extends TIMUIKitState<TIMUIKitAppBar> {
                                     color: theme.cautionColor,
                                   ),
                                   child:
-                                      Text(_getTotalUnReadCount(unReadCount)),
+                                      Text(_getTotalUnReadCount(unReadCount), style: TextStyle(color: Colors.white),),
                                 ),
                             ],
                           ));

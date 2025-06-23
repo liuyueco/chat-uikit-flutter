@@ -690,7 +690,7 @@ class _MorePanelState extends TIMUIKitState<MorePanel> {
     return Container(
       height: 248,
       decoration: BoxDecoration(
-        // color: hexToColor("EBF0F6"),
+        color: hexToColor("FFFFFF"),
         border: Border(
           top: BorderSide(width: 1, color: Colors.grey.shade300),
         ),
