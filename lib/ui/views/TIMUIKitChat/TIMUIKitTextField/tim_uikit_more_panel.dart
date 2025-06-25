@@ -702,8 +702,8 @@ class _MorePanelState extends TIMUIKitState<MorePanel> {
         child: SingleChildScrollView(
           controller: _scrollController,
           child: Wrap(
-            spacing: (screenWidth - (23 * 2) - 64 * 4) / 3,
-            runSpacing: 20,
+            spacing: (screenWidth - (23 * 2) - 70 * 4) / 3,
+            runSpacing: 15,
             children: itemList(model, theme)
                 .map((item) => InkWell(
                     onTap: () {
@@ -715,7 +715,7 @@ class _MorePanelState extends TIMUIKitState<MorePanel> {
                         ? widget.morePanelConfig?.actionBuilder!(item)
                         : SizedBox(
                             height: 94,
-                            width: 64,
+                            width: 70,
                             child: Column(
                               children: [
                                 Container(
