@@ -112,7 +112,7 @@ class _TIMUIKitAddFriendState extends TIMUIKitState<TIMUIKitAddFriend> {
         }
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         color: Colors.white,
         child: Row(
           // crossAxisAlignment: CrossAxisAlignment.start,
@@ -277,8 +277,9 @@ class _TIMUIKitAddFriendState extends TIMUIKitState<TIMUIKitAddFriend> {
             if (showResult)
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  margin: const EdgeInsets.only(top: 16),
+                  color: Color(0xffF9F9F9),
+                  // padding: const EdgeInsets.symmetric(horizontal: 0),
+                  padding: const EdgeInsets.only(top: 16),
                   child: SingleChildScrollView(
                     child: Column(
                       children: _searchResultBuilder(searchResult, theme),

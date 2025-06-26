@@ -220,7 +220,8 @@ class _SendApplicationState extends TIMUIKitState<SendApplication> {
           color: theme.weakBackgroundColor,
           child: sendApplicationBody(),
         ),
-        defaultWidget: Scaffold(
+        defaultWidget: Scaffold(            
+          backgroundColor: const Color(0xFFF9F9F9),
           appBar: AppBar(
             title: Text(
               TIM_t("添加好友"),

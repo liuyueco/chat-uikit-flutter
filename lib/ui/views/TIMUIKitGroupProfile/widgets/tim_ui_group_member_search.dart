@@ -24,30 +24,61 @@ class GroupMemberSearchTextField extends TIMUIKitStatelessWidget {
         (text) => onTextChange(text), const Duration(milliseconds: 300));
 
     return Container(
-      color: Colors.white,
       child: Column(children: [
-        if(!isDesktopScreen) Container(
-          decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-              border: Border.all(color: theme.weakBackgroundColor!, width: 12)),
-          child: TextField(
-            onChanged: debounceFunc,
-            decoration: InputDecoration(
-              hintText: TIM_t("搜索"),
-              prefixIcon: const Icon(Icons.search),
+        if (!isDesktopScreen)
+          Container(
+              color: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Container(
+                color: Colors.white,
+                child: Container(
+                  height: 36, // 明确设置高度
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE9E9E9),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 12),
+                      Image.asset(
+                        'images/icon_search.png',
+                        package: 'tencent_cloud_chat_uikit',
+                        width: 24,
+                        height: 24,
+                      ),
+                      const SizedBox(width: 4),
+                      Expanded(
+                        child: TextField(
+                          onChanged: debounceFunc,
+                          cursorHeight: 16,
+                          decoration: InputDecoration(
+                            hintText: TIM_t("搜索"),
+                            hintStyle: const TextStyle(
+                                color: Color(0xFF999999), fontSize: 14),
+                            border: InputBorder.none,
+                            isDense: true, // 使文本更紧凑
+                            contentPadding: EdgeInsets.zero,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                    ],
+                  ),
+                ),
+              )),
+        if (isDesktopScreen)
+          TIMUIKitSearchInput(
+            prefixIcon: Icon(
+              Icons.search,
+              size: 16,
+              color: hexToColor("979797"),
             ),
+            onChange: (text) {
+              focusNode.requestFocus();
+              debounceFunc(text);
+            },
+            focusNode: focusNode,
           ),
-        ),
-        if(isDesktopScreen) TIMUIKitSearchInput(prefixIcon: Icon(
-          Icons.search,
-          size: 16,
-          color: hexToColor("979797"),
-        ),
-          onChange: (text){
-          focusNode.requestFocus();
-            debounceFunc(text);
-          }, focusNode: focusNode,
-        ),
         Divider(
             thickness: 1,
             indent: 74,

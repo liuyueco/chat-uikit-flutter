@@ -139,6 +139,7 @@ class _SelectCallInviterState extends TIMUIKitState<SelectCallInviter> {
     final TUITheme theme = value.theme;
 
     return Scaffold(
+        backgroundColor: const Color(0xFFF9F9F9),
         appBar: AppBar(
           shadowColor: theme.weakBackgroundColor,
           iconTheme: IconThemeData(
@@ -179,7 +180,7 @@ class _SelectCallInviterState extends TIMUIKitState<SelectCallInviter> {
             TIM_t("发起呼叫"),
             style: TextStyle(
               color: theme.appbarTextColor,
-              fontSize: 17,
+              fontSize: 16,
             ),
           ),
         ),
