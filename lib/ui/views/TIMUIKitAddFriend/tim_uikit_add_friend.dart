@@ -181,6 +181,29 @@ class _TIMUIKitAddFriendState extends TIMUIKitState<TIMUIKitAddFriend> {
   }
 
   searchFriend(String params) async {
+    if (widget.lifeCycle != null) {
+      try {
+        final customResult = await widget.lifeCycle!.searchFriend(params);
+        debugPrint("自定义 searchFriend 方法返回结果: ${customResult?.isNotEmpty == true ? customResult![0].userID : '无结果'}");
+        final userid = customResult?.isNotEmpty == true ? customResult![0].userID : null;
+          if (userid != null) {
+            final response = await _coreServicesImpl.getUsersInfo(userIDList: [userid]);
+            if (response.code == 0) {
+          setState(() {
+            searchResult = response.data;
+          });
+        } else {
+          setState(() {
+            searchResult = null;
+          });
+        }
+        }
+      } catch (e) {
+        debugPrint("调用自定义 searchFriend 方法出错: $e");
+      }
+      return;
+  }
+
     final response = await _coreServicesImpl.getUsersInfo(userIDList: [params]);
     if (response.code == 0) {
       setState(() {
@@ -258,19 +281,6 @@ class _TIMUIKitAddFriendState extends TIMUIKitState<TIMUIKitAddFriend> {
                         ),
                         hintText: TIM_t("搜索用户 ID")),
                   )),
-                  // const SizedBox(
-                  //   width: 8,
-                  // ),
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     _controller.clear();
-                  //     setState(() {
-                  //       _controller.text = "";
-                  //       showResult = false;
-                  //     });
-                  //   },
-                  //   child: const Text("取消"),
-                  // ),
                 ],
               ),
             ),
