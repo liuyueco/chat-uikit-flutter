@@ -279,7 +279,7 @@ class _TIMUIKitAddFriendState extends TIMUIKitState<TIMUIKitAddFriend> {
                         hintStyle: TextStyle(
                           color: theme.weakTextColor,
                         ),
-                        hintText: TIM_t("搜索用户 ID")),
+                        hintText: TIM_t("搜索用户手机号")),
                   )),
                 ],
               ),
