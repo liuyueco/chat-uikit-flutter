@@ -125,7 +125,7 @@ class TIMUIKitConversationItem extends TIMUIKitStatelessWidget {
                 fit: StackFit.expand,
                 clipBehavior: Clip.none,
                 children: [
-                  Avatar(onlineStatus: onlineStatus, faceUrl: faceUrl, showName: nickName, type: convType, borderRadius: BorderRadius.circular(24)),
+                  Avatar(onlineStatus: onlineStatus, faceUrl: faceUrl, showName: nickName, type: convType, borderRadius: BorderRadius.circular(999)),
                   if (unreadCount != 0)
                     Positioned(
                       top: isDisturb ? -2.5 : -4.5,

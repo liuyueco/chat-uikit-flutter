@@ -135,8 +135,7 @@ class Avatar extends TIMUIKitStatelessWidget {
           ),
         if (!isShowBigWhenClick)
           ClipRRect(
-            borderRadius:
-                borderRadius ?? selfInfoViewModel.globalConfig?.defaultAvatarBorderRadius ?? BorderRadius.circular(4.8),
+            borderRadius: BorderRadius.circular(24),
             child: getImageWidget(context, theme),
           ),
         if (onlineStatus?.statusType != null && onlineStatus?.statusType != 0)
