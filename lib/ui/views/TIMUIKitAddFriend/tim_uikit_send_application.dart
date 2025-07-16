@@ -13,6 +13,7 @@ import 'package:tencent_cloud_chat_uikit/data_services/services_locatar.dart';
 import 'package:tencent_cloud_chat_uikit/ui/widgets/avatar.dart';
 import 'package:tencent_cloud_chat_uikit/base_widgets/tim_ui_kit_base.dart';
 import 'package:tencent_cloud_chat_uikit/theme/tui_theme.dart';
+import 'package:tencent_cloud_chat_demo/utils/toast.dart';
 
 class SendApplication extends StatefulWidget {
   final V2TimUserFullInfo friendInfo;
@@ -58,7 +59,7 @@ class _SendApplicationState extends TIMUIKitState<SendApplication> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              
+
               color: theme.white,
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
               margin: const EdgeInsets.only(bottom: 12, top: 16),
@@ -119,7 +120,7 @@ class _SendApplicationState extends TIMUIKitState<SendApplication> {
                   border: InputBorder.none,
                   hintStyle: TextStyle(color: theme.textgrey, fontSize: 14),
                   hintText: '',
-                  
+
                 ),
               ),
             ),
@@ -183,7 +184,7 @@ class _SendApplicationState extends TIMUIKitState<SendApplication> {
               width: double.infinity,
               margin: const EdgeInsets.only(top: 100, left: 47, right: 47),
               decoration: BoxDecoration(
-                color: Color(0xff0072FC),
+                color: const Color(0xff0072FC),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: TextButton(
@@ -197,14 +198,24 @@ class _SendApplicationState extends TIMUIKitState<SendApplication> {
                             false) {
                       return;
                     }
-
+                    ToastUtils.showLoading();
                     _friendshipServices.addFriend(
                         userID: userID,
                         addType: FriendTypeEnum.V2TIM_FRIEND_TYPE_BOTH,
                         remark: remark,
                         addWording: addWording,
-                        friendGroup: friendGroup);
+                        friendGroup: friendGroup).then((res){
+                              Navigator.pop(context);
+                    }).whenComplete((){
+                      ToastUtils.hideLoading();
+                    });
+
+
+
+
+
                   },
+
                   child: Text(TIM_t("发送"), style: TextStyle(color: theme.white),)
                 ),
             )
@@ -220,7 +231,7 @@ class _SendApplicationState extends TIMUIKitState<SendApplication> {
           color: theme.weakBackgroundColor,
           child: sendApplicationBody(),
         ),
-        defaultWidget: Scaffold(            
+        defaultWidget: Scaffold(
           backgroundColor: const Color(0xFFF9F9F9),
           appBar: AppBar(
             title: Text(

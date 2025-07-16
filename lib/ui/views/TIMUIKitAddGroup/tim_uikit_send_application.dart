@@ -16,6 +16,7 @@ import 'package:tencent_cloud_chat_uikit/base_widgets/tim_ui_kit_base.dart';
 import 'package:tencent_cloud_chat_uikit/base_widgets/tim_callback.dart';
 import 'package:tencent_cloud_chat_uikit/theme/tui_theme.dart';
 
+
 class SendJoinGroupApplication extends StatefulWidget {
   final V2TimGroupInfo groupInfo;
   final AddGroupLifeCycle? lifeCycle;

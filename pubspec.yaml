@@ -76,6 +76,8 @@ dependencies:
   just_audio: ^0.9.34
   markdown: ^7.1.0
   logger: ^2.0.1
+  flutter_styled_toast: ^2.1.3
+  flutter_easyloading: ^3.0.3
   visibility_detector: ^0.4.0+2
 
 dev_dependencies:
@@ -85,8 +87,10 @@ dev_dependencies:
 
 dependency_overrides:
   tencent_chat_i18n_tool:
-    path: ../tencent_chat_i18n_tool
+    path: ../tencent-chat-i18n-tool
 
+  tencent_cloud_chat_demo:
+    path: ../pinim
 #  tencent_cloud_chat_sdk:
 #    path: ../../../../imsdk/imsdk/src/platform/flutter/tencent_cloud_chat_sdk/
 
