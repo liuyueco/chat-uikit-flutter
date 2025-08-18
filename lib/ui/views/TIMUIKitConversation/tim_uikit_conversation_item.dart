@@ -105,7 +105,7 @@ class TIMUIKitConversationItem extends TIMUIKitStatelessWidget {
     return Container(
       padding: const EdgeInsets.only(top: 0, bottom: 0, left: 16, right: 16),
       decoration: BoxDecoration(
-        color: const Color(0xFFF9F9F9), // 添加背景色
+        // color: const Color(0xFFF9F9F9), // 添加背景色
         // border: Border(
         //   bottom: BorderSide(
         //     color: theme.conversationItemBorderColor ?? CommonColor.weakDividerColor,
@@ -113,95 +113,97 @@ class TIMUIKitConversationItem extends TIMUIKitStatelessWidget {
         //   ),
         // ),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            padding: const EdgeInsets.only(top: 0, bottom: 2, right: 0),
-            child: SizedBox(
-              width: isDesktopScreen ? 40 : 46,
-              height: isDesktopScreen ? 40 : 46,
-              child: Stack(
-                fit: StackFit.expand,
-                clipBehavior: Clip.none,
-                children: [
-                  Avatar(onlineStatus: onlineStatus, faceUrl: faceUrl, showName: nickName, type: convType, borderRadius: BorderRadius.circular(999)),
-                  if (unreadCount != 0)
-                    Positioned(
-                      top: isDisturb ? -2.5 : -4.5,
-                      right: isDisturb ? -2.5 : -4.5,
-                      child: UnconstrainedBox(
-                        child: UnreadMessage(
-                            width: isDisturb ? 10 : 18,
-                            height: isDisturb ? 10 : 18,
-                            unreadCount: isDisturb ? 0 : unreadCount),
-                      ),
-                    )
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-              child: Container(
-            height: 66,
-            margin: EdgeInsets.only(left: isDesktopScreen ? 10 : 16),
-            padding: const EdgeInsets.only(top: 0, bottom: 0),
-                decoration: BoxDecoration(
-                color: const Color(0xFFF9F9F9), // 添加背景色
-                border: Border(
-                    bottom: BorderSide(
-                      color: theme.conversationItemBorderColor ?? CommonColor.weakDividerColor,
-                      width: 1,
-                    ),
-                  ),
-              ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child:InkWell(
+        child:  Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.only(top: 0, bottom: 2, right: 0),
+              child: SizedBox(
+                width: isDesktopScreen ? 40 : 46,
+                height: isDesktopScreen ? 40 : 46,
+                child: Stack(
+                  fit: StackFit.expand,
+                  clipBehavior: Clip.none,
                   children: [
-                    Expanded(
-                        child: Text(
-                      nickName,
-                      softWrap: true,
-                      textAlign: TextAlign.left,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: TextStyle(
-                        height: 1,
-                        color: theme.conversationItemTitleTextColor,
-                        fontSize: isDesktopScreen ? 14 : 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    )),
-                    _getTimeStringForChatWidget(context, theme),
-                  ],
-                ),
-                if (isHaveSecondLine())
-                  const SizedBox(
-                    height: 6,
-                  ),
-                Row(
-                  children: [
-                    Expanded(child: _getShowMsgWidget(context)),
-                    if (isDisturb)
-                      SizedBox(
-                        width: 18,
-                        height: 18,
-                        child: Icon(
-                          Icons.notifications_off,
-                          color: theme.conversationItemNoNotificationIconColor,
-                          size: isDesktopScreen ? 14 : 16.0,
+                    Avatar(onlineStatus: onlineStatus, faceUrl: faceUrl, showName: nickName, type: convType, borderRadius: BorderRadius.circular(999)),
+                    if (unreadCount != 0)
+                      Positioned(
+                        top: isDisturb ? -2.5 : -4.5,
+                        right: isDisturb ? -2.5 : -4.5,
+                        child: UnconstrainedBox(
+                          child: UnreadMessage(
+                              width: isDisturb ? 10 : 18,
+                              height: isDisturb ? 10 : 18,
+                              unreadCount: isDisturb ? 0 : unreadCount),
                         ),
                       )
                   ],
                 ),
-              ],
+              ),
             ),
-          ))
-        ],
-      ),
+            Expanded(
+                child: Container(
+                  height: 66,
+                  margin: EdgeInsets.only(left: isDesktopScreen ? 10 : 16),
+                  padding: const EdgeInsets.only(top: 0, bottom: 0),
+                  decoration: BoxDecoration(
+                    // color: const Color(0xFFF9F9F9), // 添加背景色
+                    border: Border(
+                      bottom: BorderSide(
+                        color: theme.conversationItemBorderColor ?? CommonColor.weakDividerColor,
+                        width: 1,
+                      ),
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                              child: Text(
+                                nickName,
+                                softWrap: true,
+                                textAlign: TextAlign.left,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: TextStyle(
+                                  height: 1,
+                                  color: theme.conversationItemTitleTextColor,
+                                  fontSize: isDesktopScreen ? 14 : 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              )),
+                          _getTimeStringForChatWidget(context, theme),
+                        ],
+                      ),
+                      if (isHaveSecondLine())
+                        const SizedBox(
+                          height: 6,
+                        ),
+                      Row(
+                        children: [
+                          Expanded(child: _getShowMsgWidget(context)),
+                          if (isDisturb)
+                            SizedBox(
+                              width: 18,
+                              height: 18,
+                              child: Icon(
+                                Icons.notifications_off,
+                                color: theme.conversationItemNoNotificationIconColor,
+                                size: isDesktopScreen ? 14 : 16.0,
+                              ),
+                            )
+                        ],
+                      ),
+                    ],
+                  ),
+                ))
+          ],
+        ),
+      )
     );
   }
 }

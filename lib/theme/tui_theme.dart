@@ -77,7 +77,7 @@ class TUITheme {
     /// 会话列表侧滑按钮Clear背景颜色
     this.conversationItemSliderClearBgColor = const Color(0xFF00449E), // 1
 
-    /// 会话列表侧滑按钮Pin背景颜色
+    /// 会话列表侧滑按钮Pin背景颜色1
     this.conversationItemSliderPinBgColor = const Color(0xFFFF9C19), // 1
 
     /// 会话列表侧滑按钮Delete背景颜色

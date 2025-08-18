@@ -81,7 +81,7 @@ class TIMUIKitSearchIndicator extends TIMUIKitStatelessWidget {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Expanded(
+              Expanded( 
                 child: Text(TIM_t("搜索指定内容"),
                     style: TextStyle(color: theme.weakTextColor, fontSize: 12)),
               )

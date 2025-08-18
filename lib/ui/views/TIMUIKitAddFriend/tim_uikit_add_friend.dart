@@ -54,8 +54,7 @@ class _TIMUIKitAddFriendState extends TIMUIKitState<TIMUIKitAddFriend> {
   bool showResult = false;
   List<V2TimUserFullInfo>? searchResult;
 
-  Widget _searchResultItemBuilder(
-      V2TimUserFullInfo friendInfo, TUITheme theme) {
+  Widget _searchResultItemBuilder(V2TimUserFullInfo friendInfo, TUITheme theme) {
     final isDesktopScreen =
         TUIKitScreenUtils.getFormFactor(context) == DeviceType.Desktop;
 

@@ -374,8 +374,7 @@ class _TIMUIKitConversationState extends TIMUIKitState<TIMUIKitConversation> {
                                   ? theme.conversationItemPinedBgColor
                                   : theme.conversationItemBgColor,
                           child: InkWell(
-                            splashColor: Colors.blue, // 水波纹颜色
-                            highlightColor: Colors.grey,
+
                             child: TIMUIKitConversationItem(
                                 isCurrent: isCurrent,
                                 lastMessageBuilder: widget.lastMessageBuilder,
@@ -408,7 +407,6 @@ class _TIMUIKitConversationState extends TIMUIKitState<TIMUIKitConversation> {
                             index: index,
                             child: InkWell(
                               onSecondaryTapDown: (details) {
-
                                 TUIKitWidePopup.showPopupWindow(
                                     operationKey: TUIKitWideModalOperationKey.conversationSecondaryMenu,
                                     isDarkBackground: false,
