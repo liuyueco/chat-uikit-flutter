@@ -226,14 +226,23 @@ class _SendApplicationState extends TIMUIKitState<SendApplication> {
 
     return TUIKitScreenUtils.getDeviceWidget(
         context: context,
+
         desktopWidget: Container(
           padding: const EdgeInsets.only(top: 10),
           color: theme.weakBackgroundColor,
           child: sendApplicationBody(),
         ),
         defaultWidget: Scaffold(
+
           backgroundColor: const Color(0xFFF9F9F9),
           appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios, color: theme.appbarTextColor),
+              onPressed: () {
+                Navigator.pop(context); // 返回上一个页面
+              },
+            ),
+
             title: Text(
               TIM_t("添加好友"),
               style: TextStyle(color: theme.appbarTextColor, fontSize: 16),

@@ -272,9 +272,12 @@ class _VideoScreenState extends TIMUIKitState<VideoScreen> {
               bottom: 20,
               left: 20,
               child: IconButton(
+                iconSize: 32, // 调整关闭按钮大小
                 icon: Image.asset(
                   'images/close.png',
                   package: 'tencent_cloud_chat_uikit',
+                  width: 32,
+                  height: 32,
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -285,9 +288,12 @@ class _VideoScreenState extends TIMUIKitState<VideoScreen> {
               bottom: 20,
               right: 20,
               child: IconButton(
+                iconSize: 32, // 调整下载按钮大小
                 icon: Image.asset(
                   'images/download.png',
                   package: 'tencent_cloud_chat_uikit',
+                  width: 32,
+                  height: 32,
                 ),
                 onPressed: () async {
                   await _saveVideo();
