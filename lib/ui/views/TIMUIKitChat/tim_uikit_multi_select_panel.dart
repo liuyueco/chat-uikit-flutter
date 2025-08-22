@@ -155,12 +155,12 @@ class MultiSelectPanel extends TIMUIKitStatelessWidget {
                       icon: Image.asset('images/forward.png',
                           package: 'tencent_cloud_chat_uikit',
                           color: theme.selectPanelTextIconColor),
-                      iconSize: 30,
+                      iconSize: 10,
                       onPressed: () {
                         _handleForwardMessageWide(context, false, model);
                       },
                     ),
-                    Text(TIM_t("逐条转发"),
+                    Text(TIM_t("逐条转发1111"),
                         style: TextStyle(
                             color: hexToColor("646a73"), fontSize: 12))
                   ],
@@ -235,8 +235,8 @@ class MultiSelectPanel extends TIMUIKitStatelessWidget {
               children: [
                 IconButton(
                   icon: Image.asset('images/forward.png',
-                      package: 'tencent_cloud_chat_uikit', color: theme.selectPanelTextIconColor),
-                  iconSize: 40,
+                      package: 'tencent_cloud_chat_uikit', color: theme.selectPanelTextIconColor, width: 24, height: 24,),
+                  iconSize: 10,
                   onPressed: () {
                     _handleForwardMessage(context, false, model);
                   },
@@ -249,8 +249,8 @@ class MultiSelectPanel extends TIMUIKitStatelessWidget {
               children: [
                 IconButton(
                   icon: Image.asset('images/merge_forward.png',
-                      package: 'tencent_cloud_chat_uikit', color: theme.selectPanelTextIconColor),
-                  iconSize: 40,
+                      package: 'tencent_cloud_chat_uikit', color: theme.selectPanelTextIconColor, width: 24, height: 24,),
+                  iconSize: 10,
                   onPressed: () {
                     _handleForwardMessage(context, true, model);
                   },
@@ -265,7 +265,7 @@ class MultiSelectPanel extends TIMUIKitStatelessWidget {
               children: [
                 IconButton(
                   icon: Image.asset('images/delete.png',
-                      package: 'tencent_cloud_chat_uikit', color: theme.selectPanelTextIconColor),
+                      package: 'tencent_cloud_chat_uikit', color: theme.selectPanelTextIconColor, width: 24, height: 24,),
                   iconSize: 40,
                   onPressed: () {
                     showCupertinoModalPopup<String>(
