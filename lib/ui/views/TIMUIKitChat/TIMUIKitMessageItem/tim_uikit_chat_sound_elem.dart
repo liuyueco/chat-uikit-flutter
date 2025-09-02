@@ -74,6 +74,9 @@ class _TIMUIKitSoundElemState extends TIMUIKitState<TIMUIKitSoundElem> {
     if (isPlaying) {
       SoundPlayer.stop();
       widget.chatModel.currentPlayedMsgId = "";
+      setState(() {
+        isPlaying = false;
+      });
     } else {
       SoundPlayer.play(url: stateElement.url!);
       widget.chatModel.currentPlayedMsgId = widget.msgID;
@@ -117,7 +120,21 @@ class _TIMUIKitSoundElemState extends TIMUIKitState<TIMUIKitSoundElem> {
       }
     });
 
+    // 监听全局播放状态变化，确保当其他语音开始播放时，当前语音状态正确更新
+    widget.chatModel.addListener(_onGlobalPlayStateChanged);
+
     downloadMessageDetailAndSave();
+  }
+
+  void _onGlobalPlayStateChanged() {
+    final currentPlayingId = widget.chatModel.currentPlayedMsgId;
+    final shouldBePlaying = currentPlayingId.isNotEmpty && currentPlayingId == widget.msgID;
+
+    if (isPlaying != shouldBePlaying) {
+      setState(() {
+        isPlaying = shouldBePlaying;
+      });
+    }
   }
 
   @override
@@ -127,6 +144,7 @@ class _TIMUIKitSoundElemState extends TIMUIKitState<TIMUIKitSoundElem> {
       widget.chatModel.currentPlayedMsgId = "";
     }
     subscription?.cancel();
+    widget.chatModel.removeListener(_onGlobalPlayStateChanged);
     super.dispose();
   }
 
