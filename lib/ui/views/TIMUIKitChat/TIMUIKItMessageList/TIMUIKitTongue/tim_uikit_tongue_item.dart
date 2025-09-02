@@ -66,6 +66,7 @@ class TIMUIKitTongueItem extends TIMUIKitStatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: hexToColor("E5E5E5"), width: 1),
+          borderRadius: BorderRadius.circular(8.0),
           boxShadow: [
             BoxShadow(
                 color: theme.weakDividerColor ?? hexToColor("E6E9EB"),
