@@ -192,7 +192,7 @@ class _ContactListState extends TIMUIKitState<ContactList> {
         },
         child: Container(
           padding: const EdgeInsets.only(top: 8, left: 16),
-          decoration: BoxDecoration(border: Border(bottom: BorderSide(color: hexToColor("DBDBDB")))),
+          decoration: BoxDecoration(border: Border(bottom: BorderSide(color: hexToColor("E9E9E9"),width: 0.5))),
           child: Row(
             children: [
               Container(
