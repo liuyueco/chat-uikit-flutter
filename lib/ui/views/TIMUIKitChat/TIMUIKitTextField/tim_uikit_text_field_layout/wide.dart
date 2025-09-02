@@ -373,7 +373,7 @@ class _TIMUIKitTextFieldLayoutWideState extends TIMUIKitState<TIMUIKitTextFieldL
                         height: widget.chatConfig.desktopStickerPanelHeight,
                         width: 350,
                         sendTextMessage: () {
-                          widget.onEmojiSubmitted();
+                          // 隐藏发送按钮功能 - 不执行发送操作
                         },
                         sendFaceMessage: widget.onCustomEmojiFaceSubmitted,
                         deleteText: () {

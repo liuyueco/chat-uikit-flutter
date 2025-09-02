@@ -202,8 +202,7 @@ class _TIMUIKitTextFieldLayoutNarrowState extends TIMUIKitState<TIMUIKitTextFiel
       return widget.customStickerPanel != null
           ? widget.customStickerPanel!(
               sendTextMessage: () {
-                widget.onEmojiSubmitted();
-                setSendButton();
+                // 隐藏发送按钮功能 - 不执行发送操作
               },
               sendFaceMessage: widget.onCustomEmojiFaceSubmitted,
               deleteText: () {
@@ -230,10 +229,7 @@ class _TIMUIKitTextFieldLayoutNarrowState extends TIMUIKitState<TIMUIKitTextFiel
               defaultCustomEmojiStickerList: widget.isUseDefaultEmoji ? TUIKitStickerConstData.emojiList : [])
           : StickerPanel(
               isWideScreen: false,
-              sendTextMsg: () {
-                widget.onEmojiSubmitted();
-                setSendButton();
-              },
+              sendTextMsg: null,
               sendFaceMsg: widget.onCustomEmojiFaceSubmitted,
               deleteText: () {
                 widget.backSpaceText();

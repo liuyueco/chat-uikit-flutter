@@ -41,7 +41,7 @@ class TIMUIKitChatExample extends StatelessWidget {
           ));
     }).toList();
     return StickerPanel(
-        sendTextMsg: sendTextMessage,
+        sendTextMsg: null, // 隐藏发送按钮
         sendFaceMsg: (index, data) =>
             sendFaceMessage(index + 1, (data.split("/")[3]).split("@")[0]),
         deleteText: deleteText,
