@@ -229,6 +229,7 @@ Widget renderCustomStickerPanel({
        ...defaultEmojiList,
        ...customStickerPackageList
      ],
+     bottomColor: const Color(0xFFF6F6F6),
      backgroundColor: const Color(0xFFF6F6F6),
      lightPrimaryColor: theme.lightPrimaryColor);
 }

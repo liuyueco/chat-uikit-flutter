@@ -433,7 +433,7 @@ class _TIMUIKitTextFieldLayoutWideState extends TIMUIKitState<TIMUIKitTextFieldL
                               entry = null;
                             }),
                             customStickerPackageList: widget.stickerPackageList,
-                            bottomColor: theme.weakBackgroundColor,
+                            bottomColor: const Color(0xFFF6F6F6),
                             backgroundColor: const Color(0xFFF6F6F6),
                             lightPrimaryColor: theme.lightPrimaryColor),
                       ),

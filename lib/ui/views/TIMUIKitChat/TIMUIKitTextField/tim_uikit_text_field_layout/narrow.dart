@@ -256,6 +256,7 @@ class _TIMUIKitTextFieldLayoutNarrowState extends TIMUIKitState<TIMUIKitTextFiel
                 setSendButton();
               }),
               customStickerPackageList: widget.stickerPackageList,
+              bottomColor: const Color(0xFFF6F6F6),
               backgroundColor: const Color(0xFFF6F6F6),
               lightPrimaryColor: theme.lightPrimaryColor);
     }
