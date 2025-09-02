@@ -368,6 +368,7 @@ class _TIMUIKitTextFieldLayoutWideState extends TIMUIKitState<TIMUIKitTextFieldL
                 ],
               ),
               child: Container(
+                color: const Color(0xFFF6F6F6),
                 child: widget.customStickerPanel != null
                     ? widget.customStickerPanel!(
                         height: widget.chatConfig.desktopStickerPanelHeight,
@@ -433,7 +434,7 @@ class _TIMUIKitTextFieldLayoutWideState extends TIMUIKitState<TIMUIKitTextFieldL
                             }),
                             customStickerPackageList: widget.stickerPackageList,
                             bottomColor: theme.weakBackgroundColor,
-                            backgroundColor: theme.wideBackgroundColor,
+                            backgroundColor: const Color(0xFFF6F6F6),
                             lightPrimaryColor: theme.lightPrimaryColor),
                       ),
               ),

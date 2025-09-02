@@ -219,7 +219,7 @@ Widget renderCustomStickerPanel({
        ));
  }).toList();
  return StickerPanel(
-     sendTextMsg: sendTextMessage,
+     sendTextMsg: null, // Hide send button
      sendFaceMsg: (index, data) =>
          sendFaceMessage(index + 1, (data.split("/")[3]).split("@")[0]),
      deleteText: deleteText,
@@ -229,7 +229,7 @@ Widget renderCustomStickerPanel({
        ...defaultEmojiList,
        ...customStickerPackageList
      ],
-     backgroundColor: theme.weakBackgroundColor,
+     backgroundColor: const Color(0xFFF6F6F6),
      lightPrimaryColor: theme.lightPrimaryColor);
 }
 ```

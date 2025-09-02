@@ -49,7 +49,8 @@ class TIMUIKitChatExample extends StatelessWidget {
         addCustomEmojiText: addCustomEmojiText,
         customStickerPackageList: [
           ...defaultEmojiList,
-        ]);
+        ],
+        backgroundColor: const Color(0xFFF6F6F6));
   }
 
   @override

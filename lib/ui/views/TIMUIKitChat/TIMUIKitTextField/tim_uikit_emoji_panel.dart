@@ -27,12 +27,14 @@ class EmojiPanel extends TIMUIKitStatelessWidget {
     // ignore: avoid_print
     outputLogger.i(TIM_t(
         "暂未安装表情包插件，如需使用表情相关功能，请根据本文档安装：https://cloud.tencent.com/document/product/269/70746"));
-    return SingleChildScrollView(
+    return Container(
+      color: const Color(0xFFF6F6F6),
+      child: SingleChildScrollView(
         child: Column(
       children: [
         Container(
           height: showBottomContainer ? 190 : 248,
-          // color: theme.weakBackgroundColor,
+          color: const Color(0xFFF6F6F6),
           padding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -61,7 +63,8 @@ class EmojiPanel extends TIMUIKitStatelessWidget {
               )
             : Container()
       ],
-    ));
+    )),
+    );
   }
 }
 
