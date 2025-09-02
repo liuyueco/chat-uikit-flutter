@@ -458,7 +458,7 @@ class _TUIChatState extends TIMUIKitState<TIMUIKitChat> {
               textFieldController.hideAllPanel();
             },
             child: Scaffold(
-                backgroundColor: const Color(0xffF9F9F9),
+                backgroundColor: const Color(0xFFf9f9f9),
                 resizeToAvoidBottomInset: false,
                 appBar: (widget.customAppBar == null)
                     ? TIMUIKitAppBar(
@@ -504,7 +504,7 @@ class _TUIChatState extends TIMUIKitState<TIMUIKitChat> {
                           if (_joinInGroupCallWidget != null) Center(child: _joinInGroupCallWidget!),
                           Expanded(
                               child: Container(
-                            color: theme.chatBgColor,
+                            color: theme.chatBgColor ?? const Color(0xFFf9f9f9),
                             child: Align(
                                 key: alignKey,
                                 alignment: Alignment.topCenter,

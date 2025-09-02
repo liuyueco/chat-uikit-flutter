@@ -33,7 +33,7 @@ class TUITheme {
     this.appbarTextColor = const Color(0xFF010000),
 
     /// 会话列表背景颜色
-    this.conversationItemBgColor = Colors.white, // 1
+    this.conversationItemBgColor = Colors.transparent, // 1
 
     /// 会话列表边框颜色
     this.conversationItemBorderColor = const Color(0xFFE5E6E9), // 1
@@ -87,7 +87,7 @@ class TUITheme {
     this.conversationItemChooseBgColor = const Color(0xFFE7F0FF), // 1
 
     /// 聊天页背景颜色
-    this.chatBgColor, // 1
+    this.chatBgColor = const Color(0xFFf9f9f9), // 1
 
     /// 桌面端消息输入框背景颜色
     this.desktopChatMessageInputBgColor, // 1
