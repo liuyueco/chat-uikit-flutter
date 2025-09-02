@@ -320,17 +320,7 @@ class _TIMUIKitFileElemState extends TIMUIKitState<TIMUIKitFileElem> {
     final received = downloadProgress;
     final fileName = widget.fileElem!.fileName ?? "";
     final fileSize = widget.fileElem!.fileSize;
-    final borderRadius = widget.isSelf
-        ? const BorderRadius.only(
-            topLeft: Radius.circular(10),
-            topRight: Radius.circular(2),
-            bottomLeft: Radius.circular(10),
-            bottomRight: Radius.circular(10))
-        : const BorderRadius.only(
-            topLeft: Radius.circular(2),
-            topRight: Radius.circular(10),
-            bottomLeft: Radius.circular(10),
-            bottomRight: Radius.circular(10));
+    const borderRadius = BorderRadius.all(Radius.circular(10));
     String? fileFormat;
     if (widget.fileElem?.fileName != null && widget.fileElem!.fileName!.isNotEmpty) {
       final String fileName = widget.fileElem!.fileName!;

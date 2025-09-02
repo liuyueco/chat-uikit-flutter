@@ -34,17 +34,7 @@ class TIMUIKitCustomElem extends TIMUIKitStatelessWidget {
   @override
   Widget tuiBuild(BuildContext context, TUIKitBuildValue value) {
     final theme = value.theme;
-    final borderRadius = isFromSelf
-        ? const BorderRadius.only(
-            topLeft: Radius.circular(10),
-            topRight: Radius.circular(2),
-            bottomLeft: Radius.circular(10),
-            bottomRight: Radius.circular(10))
-        : const BorderRadius.only(
-            topLeft: Radius.circular(2),
-            topRight: Radius.circular(10),
-            bottomLeft: Radius.circular(10),
-            bottomRight: Radius.circular(10));
+    const borderRadius = BorderRadius.all(Radius.circular(10));
     final backgroundColor = isFromSelf ? theme.lightPrimaryMaterialColor.shade50 : theme.weakBackgroundColor;
     return Container(
         padding: textPadding ?? const EdgeInsets.all(10),

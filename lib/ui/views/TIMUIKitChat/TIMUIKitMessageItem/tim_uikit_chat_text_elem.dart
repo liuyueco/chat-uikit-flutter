@@ -164,17 +164,7 @@ class _TIMUIKitTextElemState extends TIMUIKitState<TIMUIKitTextElem> {
             widget.chatModel.chatConfig.stickerPanelConfig?.useTencentCloudChatStickerPackageOldKeys ?? false,
         customEmojiStickerList: widget.customEmojiStickerList,
         isEnableTextSelection: widget.chatModel.chatConfig.isEnableTextSelection ?? false);
-    final borderRadius = widget.isFromSelf
-        ? const BorderRadius.only(
-            topLeft: Radius.circular(10),
-            topRight: Radius.circular(2),
-            bottomLeft: Radius.circular(10),
-            bottomRight: Radius.circular(10))
-        : const BorderRadius.only(
-            topLeft: Radius.circular(2),
-            topRight: Radius.circular(10),
-            bottomLeft: Radius.circular(10),
-            bottomRight: Radius.circular(10));
+    const borderRadius = BorderRadius.all(Radius.circular(10));
     if ((widget.chatModel.jumpMsgID == widget.message.msgID)) {}
     if (widget.isShowJump) {
       if (!isShining) {

@@ -133,12 +133,7 @@ class TIMUIKitMergerElemState extends TIMUIKitState<TIMUIKitMergerElem> {
       constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * (isDesktopScreen ? 0.3 : 0.6)),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: widget.isSelf ? const Radius.circular(10) : Radius.zero,
-          bottomLeft: const Radius.circular(10),
-          topRight: widget.isSelf ? Radius.zero : const Radius.circular(10),
-          bottomRight: const Radius.circular(10),
-        ),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
         border: Border.all(
           color: isShowJumpState
               ? const Color.fromRGBO(245, 166, 35, 1)
