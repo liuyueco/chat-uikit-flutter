@@ -183,6 +183,7 @@ class _TIMUIKitAppBarState extends TIMUIKitState<TIMUIKitAppBar> {
           theme.primaryColor,
       actionsIconTheme: setAppbar?.actionsIconTheme,
       foregroundColor: setAppbar?.foregroundColor,
+      scrolledUnderElevation: 0,
       elevation: setAppbar?.elevation ?? (isDesktopScreen ? 0 : 1),
       bottom: setAppbar?.bottom,
       bottomOpacity: setAppbar?.bottomOpacity ?? 1.0,

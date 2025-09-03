@@ -462,10 +462,12 @@ class _TUIChatState extends TIMUIKitState<TIMUIKitChat> {
                 resizeToAvoidBottomInset: false,
                 appBar: (widget.customAppBar == null)
                     ? TIMUIKitAppBar(
+
                         showTotalUnReadCount: widget.showTotalUnReadCount,
                         config: widget.appBarConfig,
                         conversationShowName: _getTitle(),
                         conversationID: _getConvID(),
+
                         showC2cMessageEditStatus: widget.config?.showC2cMessageEditStatus ?? true,
                       )
                     : null,
