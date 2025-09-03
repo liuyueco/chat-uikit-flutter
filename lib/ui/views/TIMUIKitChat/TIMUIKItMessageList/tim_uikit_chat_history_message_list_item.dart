@@ -1281,7 +1281,7 @@ class _TIMUIKItHistoryMessageListItemState extends TIMUIKitState<TIMUIKitHistory
                           GestureDetector(
                             onLongPress: () {
                               if (widget.onLongPressForOthersHeadPortrait != null) {}
-                              if (model.chatConfig.isAllowLongPressAvatarToAt) {
+                              if (model.chatConfig.isAllowLongPressAvatarToAt && isGroupMessage) {
                                 widget.onLongPressForOthersHeadPortrait!(message.sender, message.nickName);
                               }
                             },
