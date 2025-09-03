@@ -189,6 +189,103 @@ class _TIMUIKitConversationState extends TIMUIKitState<TIMUIKitConversation> {
     _timuiKitConversationController.deleteConversation(conversationID: conversation.conversationID);
   }
 
+  _showDeleteConfirmDialog(BuildContext context, V2TimConversation conversation) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          child: Container(
+            width: 280,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // 标题
+                Container(
+                  padding: const EdgeInsets.fromLTRB(20, 24, 20, 16),
+                  child: Text(
+                    TIM_t('删除会话将同时删除聊天记录，确定要删除吗？'),
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xff333333),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                // 分割线
+                Container(
+                  height: 0.5,
+                  color: const Color(0xffE5E5E5),
+                ),
+                // 按钮区域
+                Row(
+                  children: [
+                    // 取消按钮
+                    Expanded(
+                        child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Container(
+                          height: 50,
+                          alignment: Alignment.center,
+                          child: Text(
+                            TIM_t('取消'),
+                            style: TextStyle(
+                              fontSize: 17,
+                              color: Color(0xff333333),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )),
+                    // 竖直分割线
+                    Container(
+                      width: 0.5,
+                      height: 50,
+                      color: const Color(0xffE5E5E5),
+                    ),
+                    // 删除按钮
+                    Expanded(
+                        child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          _deleteConversation(conversation);
+                        },
+                        child: Container(
+                          height: 50,
+                          alignment: Alignment.center,
+                          child: Text(
+                            TIM_t('删除'),
+                            style: TextStyle(
+                              fontSize: 17,
+                              color: Color(0xffFF3B30),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   List<V2TimConversation?> getFilteredConversation() {
     List<V2TimConversation?> filteredConversationList =
         model.conversationList.where((element) => (element?.groupID != null || element?.userID != null)).toList();
@@ -241,7 +338,7 @@ class _TIMUIKitConversationState extends TIMUIKitState<TIMUIKitConversation> {
           icon: const Icon(Icons.delete_outline, size: 16),
           onClick: () {
             onClose();
-            _deleteConversation(conversationItem);
+            _showDeleteConfirmDialog(context, conversationItem);
           }),
     ]);
   }
@@ -272,7 +369,7 @@ class _TIMUIKitConversationState extends TIMUIKitState<TIMUIKitConversation> {
       ),
       ConversationItemSlidePanel(
         onPressed: (context) {
-          _deleteConversation(conversationItem);
+          _showDeleteConfirmDialog(context, conversationItem);
         },
         backgroundColor: theme.conversationItemSliderDeleteBgColor ?? Colors.red,
         foregroundColor: theme.conversationItemSliderTextColor,
