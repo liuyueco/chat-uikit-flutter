@@ -23,10 +23,14 @@ import 'package:tencent_cloud_chat_uikit/business_logic/view_models/tui_self_inf
 import 'package:tencent_cloud_chat_uikit/data_services/friendShip/friendship_services.dart';
 import 'package:tencent_cloud_chat_uikit/data_services/group/group_services.dart';
 import 'package:tencent_cloud_chat_uikit/data_services/services_locatar.dart';
+import 'package:tencent_cloud_chat_uikit/data_services/message/message_services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class TUIFriendShipViewModel extends ChangeNotifier {
   final FriendshipServices _friendshipServices = serviceLocator<FriendshipServices>();
   final GroupServices _groupServices = serviceLocator<GroupServices>();
+  final MessageService _messageService = serviceLocator<MessageService>();
   final TUISelfInfoViewModel selfInfoViewModel = serviceLocator<TUISelfInfoViewModel>();
   late V2TimFriendshipListener friendShipListener;
   List<V2TimFriendApplication?>? _friendApplicationList;
@@ -91,6 +95,8 @@ class TUIFriendShipViewModel extends ChangeNotifier {
       onFriendListAdded: (users) async {
         await loadContactListData();
         loadUserStatus();
+        // 检查并发送待发送的验证消息
+        await _checkAndSendPendingMessages(users);
       },
       onFriendListDeleted: (userList) async {
         await loadContactListData();
@@ -254,6 +260,61 @@ class TUIFriendShipViewModel extends ChangeNotifier {
       {required String groupID, required List<String> memberList}) async {
     final res = await _groupServices.getGroupMembersInfo(groupID: groupID, memberList: memberList);
     return res.data ?? [];
+  }
+
+  /// 检查并发送待发送的验证消息
+  Future<void> _checkAndSendPendingMessages(List<V2TimFriendInfo> newFriends) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final pendingMessages = prefs.getStringList('pending_friend_messages') ?? [];
+      
+      if (pendingMessages.isEmpty) return;
+      
+      final List<String> messagesToRemove = [];
+      
+      for (final messageDataStr in pendingMessages) {
+        final messageData = jsonDecode(messageDataStr);
+        final String userID = messageData['userID'];
+        final String message = messageData['message'];
+        
+        // 检查是否有新添加的好友匹配待发送消息
+        final bool isFriendAdded = newFriends.any((friend) => friend.userID == userID);
+        
+        if (isFriendAdded) {
+          // 发送验证消息
+          await _sendVerificationMessage(userID, message);
+          messagesToRemove.add(messageDataStr);
+        }
+      }
+      
+      // 移除已发送的消息
+      if (messagesToRemove.isNotEmpty) {
+        pendingMessages.removeWhere((item) => messagesToRemove.contains(item));
+        await prefs.setStringList('pending_friend_messages', pendingMessages);
+      }
+    } catch (e) {
+      print('检查并发送待发送消息时出错: $e');
+    }
+  }
+
+  /// 发送验证消息给新添加的好友
+  Future<void> _sendVerificationMessage(String userID, String message) async {
+    try {
+      // 创建文本消息
+      final textMessageResult = await _messageService.createTextMessage(text: message);
+      
+      if (textMessageResult?.id != null) {
+        // 发送消息
+        await _messageService.sendMessage(
+          id: textMessageResult!.id!,
+          receiver: userID,
+          groupID: '',
+        );
+        print('验证消息已发送给用户: $userID');
+      }
+    } catch (e) {
+      print('发送验证消息失败: $e');
+    }
   }
 
   addFriendListener({V2TimFriendshipListener? listener}) {

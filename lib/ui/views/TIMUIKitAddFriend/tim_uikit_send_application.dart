@@ -14,6 +14,8 @@ import 'package:tencent_cloud_chat_uikit/ui/widgets/avatar.dart';
 import 'package:tencent_cloud_chat_uikit/base_widgets/tim_ui_kit_base.dart';
 import 'package:tencent_cloud_chat_uikit/theme/tui_theme.dart';
 import 'package:tencent_cloud_chat_demo/utils/toast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class SendApplication extends StatefulWidget {
   final V2TimUserFullInfo friendInfo;
@@ -38,6 +40,30 @@ class _SendApplicationState extends TIMUIKitState<SendApplication> {
     super.initState();
     final showName = widget.model.loginInfo?.nickName ?? widget.model.loginInfo?.userID;
     _verficationController.text = "我是: $showName";
+  }
+
+  /// 保存待发送的验证消息
+  Future<void> _savePendingMessage(String userID, String message) async {
+    if (message.trim().isEmpty) return;
+    
+    final prefs = await SharedPreferences.getInstance();
+    final pendingMessages = prefs.getStringList('pending_friend_messages') ?? [];
+    
+    // 创建消息数据
+    final messageData = jsonEncode({
+      'userID': userID,
+      'message': message,
+      'timestamp': DateTime.now().millisecondsSinceEpoch,
+    });
+    
+    // 避免重复保存同一用户的消息
+    pendingMessages.removeWhere((item) {
+      final data = jsonDecode(item);
+      return data['userID'] == userID;
+    });
+    
+    pendingMessages.add(messageData);
+    await prefs.setStringList('pending_friend_messages', pendingMessages);
   }
 
   @override
@@ -198,6 +224,10 @@ class _SendApplicationState extends TIMUIKitState<SendApplication> {
                             false) {
                       return;
                     }
+                    
+                    // 保存验证消息，用于好友通过后自动发送
+                    await _savePendingMessage(userID, addWording);
+                    
                     ToastUtils.showLoading();
                     _friendshipServices.addFriend(
                         userID: userID,
@@ -209,11 +239,6 @@ class _SendApplicationState extends TIMUIKitState<SendApplication> {
                     }).whenComplete((){
                       ToastUtils.hideLoading();
                     });
-
-
-
-
-
                   },
 
                   child: Text(TIM_t("发送"), style: TextStyle(color: theme.white),)
