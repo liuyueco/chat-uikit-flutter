@@ -102,12 +102,15 @@ class _MorePanelState extends TIMUIKitState<MorePanel> {
   bool isInstallCallkit = false;
   final ScrollController _scrollController = ScrollController();
   final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  late PageController _pageController;
+  int _currentPage = 0;
 
   late BetterPlayerController _betterPlayerController;
 
   @override
   void initState() {
     super.initState();
+    _pageController = PageController(initialPage: 0);
     if (PlatformUtils().isMobile) {
       _tUICore.getService(TUICALLKIT_SERVICE_NAME).then((value) {
         setState(() {
@@ -680,6 +683,7 @@ class _MorePanelState extends TIMUIKitState<MorePanel> {
 
   @override
   void dispose() {
+    _pageController.dispose();
     _betterPlayerController?.dispose();
     super.dispose();
   }
@@ -689,6 +693,10 @@ class _MorePanelState extends TIMUIKitState<MorePanel> {
     final TUITheme theme = value.theme;
     final TUIChatSeparateViewModel model = Provider.of<TUIChatSeparateViewModel>(context);
     final screenWidth = MediaQuery.of(context).size.width;
+    final items = itemList(model, theme);
+    final itemsPerPage = 8;
+    final pageCount = (items.length / itemsPerPage).ceil();
+    
     return Container(
       height: 248,
       decoration: BoxDecoration(
@@ -699,44 +707,83 @@ class _MorePanelState extends TIMUIKitState<MorePanel> {
       ),
       padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
       width: screenWidth,
-      child: Scrollbar(
-        controller: _scrollController,
-        child: SingleChildScrollView(
-          controller: _scrollController,
-          child: Wrap(
-            spacing: (screenWidth - (23 * 2) - 70 * 4) / 3,
-            runSpacing: 15,
-            children: itemList(model, theme)
-                .map((item) => InkWell(
-                    onTap: () {
-                      if (item.onTap != null) {
-                        item.onTap!(context);
-                      }
-                    },
-                    child: widget.morePanelConfig?.actionBuilder != null
-                        ? widget.morePanelConfig?.actionBuilder!(item)
-                        : SizedBox(
-                            height: 94,
-                            width: 70,
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 64,
-                                  width: 64,
-                                  margin: const EdgeInsets.only(bottom: 4),
-                                  decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5))),
-                                  child: item.icon,
-                                ),
-                                Text(
-                                  item.title,
-                                  style: TextStyle(fontSize: 12, color: theme.darkTextColor),
-                                )
-                              ],
-                            ),
-                          )))
-                .toList(),
+      child: Column(
+        children: [
+          Expanded(
+            child: PageView.builder(
+              controller: _pageController,
+              onPageChanged: (index) {
+                setState(() {
+                  _currentPage = index;
+                });
+              },
+              itemCount: pageCount,
+              itemBuilder: (context, pageIndex) {
+                final startIndex = pageIndex * itemsPerPage;
+                final endIndex = (startIndex + itemsPerPage).clamp(0, items.length);
+                final pageItems = items.sublist(startIndex, endIndex);
+                
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Wrap(
+                    spacing: (screenWidth - (23 * 2) - 70 * 4) / 3,
+                    runSpacing: 15,
+                    children: pageItems
+                        .map((item) => InkWell(
+                            onTap: () {
+                              if (item.onTap != null) {
+                                item.onTap!(context);
+                              }
+                            },
+                            child: widget.morePanelConfig?.actionBuilder != null
+                                ? widget.morePanelConfig?.actionBuilder!(item)
+                                : SizedBox(
+                                    height: 94,
+                                    width: 70,
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: 64,
+                                          width: 64,
+                                          margin: const EdgeInsets.only(bottom: 4),
+                                          decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5))),
+                                          child: item.icon,
+                                        ),
+                                        Text(
+                                          item.title,
+                                          style: TextStyle(fontSize: 12, color: theme.darkTextColor),
+                                        )
+                                      ],
+                                    ),
+                                  )))
+                        .toList(),
+                  ),
+                );
+              },
+            ),
           ),
-        ),
+          if (pageCount > 1)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  pageCount,
+                  (index) => Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 4),
+                    width: 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _currentPage == index
+                          ?  Color(0xFF909090)
+                          : Color(0xFFE5E5E5)
+                    ),
+                  ),
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }
