@@ -226,29 +226,7 @@ class _MorePanelState extends TIMUIKitState<MorePanel> {
               decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(5))),
               child: Icon(Icons.video_file, color: hexToColor("5c6168"), size: 26),
             )),
-      MorePanelItem(
-          id: "file",
-          title: TIM_t("文件"),
-          onTap: (c) {
-            _onFeatureTap(
-              "file",
-              c,
-              model,
-              theme,
-            );
-          },
-          icon: Container(
-            height: 64,
-            width: 64,
-            margin: const EdgeInsets.only(bottom: 4),
-            decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(5))),
-            child: SvgPicture.asset(
-              "images/file.svg",
-              package: 'tencent_cloud_chat_uikit',
-              height: 64,
-              width: 64,
-            ),
-          )),
+
       if (isInstallCallkit && PlatformUtils().isMobile)
         MorePanelItem(
             id: "videoCall",
@@ -273,6 +251,8 @@ class _MorePanelState extends TIMUIKitState<MorePanel> {
                 width: 64,
               ),
             )),
+
+      if (config.extraAction != null) ...?config.extraAction,
       if (isInstallCallkit && PlatformUtils().isMobile)
         MorePanelItem(
             id: "voiceCall",
@@ -297,7 +277,29 @@ class _MorePanelState extends TIMUIKitState<MorePanel> {
                 width: 64,
               ),
             )),
-      if (config.extraAction != null) ...?config.extraAction,
+      MorePanelItem(
+          id: "file",
+          title: TIM_t("文件"),
+          onTap: (c) {
+            _onFeatureTap(
+              "file",
+              c,
+              model,
+              theme,
+            );
+          },
+          icon: Container(
+            height: 64,
+            width: 64,
+            margin: const EdgeInsets.only(bottom: 4),
+            decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(5))),
+            child: SvgPicture.asset(
+              "images/file.svg",
+              package: 'tencent_cloud_chat_uikit',
+              height: 64,
+              width: 64,
+            ),
+          )),
     ].where((element) {
       if (element.id == "screen") {
         return config.showCameraAction;
