@@ -278,7 +278,7 @@ class _TIMUIKitAddFriendState extends TIMUIKitState<TIMUIKitAddFriend> {
                         hintStyle: TextStyle(
                           color: theme.weakTextColor,
                         ),
-                        hintText: TIM_t("搜索用户手机号")),
+                        hintText: TIM_t("请输入10位手机号(无需加0)")),
                   )),
                 ],
               ),
