@@ -59,7 +59,7 @@ class TIMUIKitConversationItem extends TIMUIKitStatelessWidget {
 
     if (lastMsg != null || (draftText != null && draftText != "")) {
       return TIMUIKitLastMsg(
-        fontSize: isDesktopScreen ? 12 : 12,
+        fontSize: isDesktopScreen ? 13 : 13,
         groupAtInfoList: groupAtInfoList,
         lastMsg: lastMsg,
         isDisturb: isDisturb,
@@ -83,13 +83,13 @@ class TIMUIKitConversationItem extends TIMUIKitStatelessWidget {
       if (draftTimestamp != null && draftTimestamp != 0) {
         return Text(TimeAgo().getTimeStringForChat(draftTimestamp as int) ?? "",
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 13,
               color: theme.conversationItemTitmeTextColor,
             ));
       } else if (lastMsg != null) {
         return Text(TimeAgo().getTimeStringForChat(lastMsg!.timestamp as int) ?? "",
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 13,
               color: theme.conversationItemTitmeTextColor,
             ));
       }
@@ -172,8 +172,8 @@ class TIMUIKitConversationItem extends TIMUIKitStatelessWidget {
                                 style: TextStyle(
                                   height: 1,
                                   color: theme.conversationItemTitleTextColor,
-                                  fontSize: isDesktopScreen ? 14 : 14,
-                                  fontWeight: FontWeight.w500,
+                                  fontSize: isDesktopScreen ? 16 : 16,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               )),
                           _getTimeStringForChatWidget(context, theme),
