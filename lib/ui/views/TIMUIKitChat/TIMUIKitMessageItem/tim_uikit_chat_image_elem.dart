@@ -18,6 +18,7 @@ import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:tencent_chat_i18n_tool/tencent_chat_i18n_tool.dart';
+import 'package:tencent_cloud_chat_sdk/enum/message_elem_type.dart';
 import 'package:tencent_cloud_chat_sdk/models/v2_tim_image.dart'
     if (dart.library.html) 'package:tencent_cloud_chat_sdk/web/compatible_models/v2_tim_image.dart';
 import 'package:tencent_cloud_chat_sdk/models/v2_tim_message.dart'
@@ -38,6 +39,7 @@ import 'package:tencent_cloud_chat_uikit/ui/utils/permission.dart';
 import 'package:tencent_cloud_chat_uikit/ui/utils/platform.dart';
 import 'package:tencent_cloud_chat_uikit/ui/utils/screen_utils.dart';
 import 'package:tencent_cloud_chat_uikit/ui/views/TIMUIKitChat/TIMUIKitMessageItem/TIMUIKitMessageReaction/tim_uikit_message_reaction_wrapper.dart';
+import 'package:tencent_cloud_chat_uikit/ui/widgets/image_gallery_screen.dart';
 import 'package:tencent_cloud_chat_uikit/ui/widgets/image_screen.dart';
 import 'package:tencent_cloud_chat_uikit/ui/widgets/wide_popup.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -117,13 +119,21 @@ class _TIMUIKitImageElem extends TIMUIKitState<TIMUIKitImageElem> {
     return res;
   }
 
+  String _getOriginImgURLForMessage(V2TimMessage message) {
+    final img = MessageUtils.getImageFromImgList(
+        message.imageElem!.imageList, HistoryMessageDartConstant.oriImgPrior);
+    return img == null ? message.imageElem!.path! : img.url!;
+  }
+
   //保存网络图片到本地
   Future<void> _saveImageToLocal(
     context,
     String imageUrl, {
     bool isLocalResource = true,
     TUITheme? theme,
+    V2TimMessage? targetMessage,
   }) async {
+    final message = targetMessage ?? widget.message;
     if (PlatformUtils().isWeb) {
       download(imageUrl) async {
         final http.Response r = await http.get(Uri.parse(imageUrl));
@@ -169,18 +179,18 @@ class _TIMUIKitImageElem extends TIMUIKitState<TIMUIKitImageElem> {
     }
 
     if (!isLocalResource) {
-      if (widget.message.msgID == null || widget.message.msgID!.isEmpty) {
+      if (message.msgID == null || message.msgID!.isEmpty) {
         return;
       }
 
-      if (model.getMessageProgress(widget.message.msgID) == 100) {
+      if (model.getMessageProgress(message.msgID) == 100) {
         String savePath;
-        if (widget.message.imageElem!.path != null &&
-            widget.message.imageElem!.path != '' &&
-            File(widget.message.imageElem!.path!).existsSync()) {
-          savePath = widget.message.imageElem!.path!;
+        if (message.imageElem!.path != null &&
+            message.imageElem!.path != '' &&
+            File(message.imageElem!.path!).existsSync()) {
+          savePath = message.imageElem!.path!;
         } else {
-          savePath = model.getFileMessageLocation(widget.message.msgID);
+          savePath = model.getFileMessageLocation(message.msgID);
         }
         File f = File(savePath);
         if (f.existsSync()) {
@@ -266,6 +276,111 @@ class _TIMUIKitImageElem extends TIMUIKitState<TIMUIKitImageElem> {
       onTIMCallback(TIMCallback(infoCode: 6660414, infoRecommendText: TIM_t("正在下载中"), type: TIMCallbackType.INFO));
       return;
     }
+  }
+
+  Future<void> _saveImgForMessage(V2TimMessage message, TUITheme theme) async {
+    try {
+      String? imageUrl;
+      bool isAssetBool = false;
+      final imageElem = message.imageElem;
+
+      if (imageElem != null) {
+        final originUrl = _getOriginImgURLForMessage(message);
+        final localUrl = imageElem.imageList?.firstOrNull?.localUrl;
+        final filePath = imageElem.path;
+        final isWeb = PlatformUtils().isWeb;
+
+        if (!isWeb && filePath != null && File(filePath).existsSync()) {
+          imageUrl = filePath;
+          isAssetBool = true;
+        } else if (localUrl != null && (!isWeb && File(localUrl).existsSync())) {
+          imageUrl = localUrl;
+          isAssetBool = true;
+        } else {
+          imageUrl = originUrl;
+          isAssetBool = false;
+        }
+      }
+
+      if (imageUrl != null) {
+        return await _saveImageToLocal(
+          context,
+          imageUrl,
+          isLocalResource: isAssetBool,
+          theme: theme,
+          targetMessage: message,
+        );
+      }
+    } catch (e) {
+      onTIMCallback(TIMCallback(infoCode: 6660414, infoRecommendText: TIM_t("正在下载中"), type: TIMCallbackType.INFO));
+      return;
+    }
+  }
+
+  ({List<ImageGalleryItem> items, int initialIndex}) _buildImageGalleryItems(TUITheme theme) {
+    // getOriginMessageList 返回 [最新, ..., 最旧]，需反转以匹配聊天显示顺序（最旧在上，最新在下）
+    final messageList = widget.chatModel.getOriginMessageList().reversed.toList();
+    final imageMessages = messageList
+        .where((m) => m.elemType == MessageElemType.V2TIM_ELEM_TYPE_IMAGE)
+        .toList();
+
+    final items = <ImageGalleryItem>[];
+    int initialIndex = 0;
+
+    for (int i = 0; i < imageMessages.length; i++) {
+      final msg = imageMessages[i];
+      final isCurrentMessage = msg.msgID == widget.message.msgID;
+
+      final originalImg = MessageUtils.getImageFromImgList(
+          msg.imageElem?.imageList, HistoryMessageDartConstant.oriImgPrior);
+      final smallImg = MessageUtils.getImageFromImgList(
+          msg.imageElem?.imageList, HistoryMessageDartConstant.smallImgPrior);
+
+      String? imgUrl;
+      String? localPath;
+      bool isNetworkImage = true;
+
+      if (msg.isSelf == true &&
+          msg.imageElem?.path != null &&
+          msg.imageElem!.path!.isNotEmpty &&
+          File(msg.imageElem!.path!).existsSync()) {
+        localPath = msg.imageElem!.path!;
+        isNetworkImage = false;
+      } else if (TencentUtils.checkString(smallImg?.localUrl) != null &&
+          File((smallImg?.localUrl)!).existsSync()) {
+        localPath = smallImg!.localUrl!;
+        isNetworkImage = false;
+      } else if (TencentUtils.checkString(originalImg?.localUrl) != null &&
+          File((originalImg?.localUrl)!).existsSync()) {
+        localPath = originalImg!.localUrl!;
+        isNetworkImage = false;
+      } else {
+        imgUrl = originalImg?.url ?? smallImg?.url ?? msg.imageElem?.path ?? "";
+      }
+
+      final heroTagStr =
+          "${msg.msgID ?? msg.id ?? msg.timestamp ?? DateTime.now().millisecondsSinceEpoch}${widget.isFrom}";
+
+      if (isNetworkImage && imgUrl != null && imgUrl.isNotEmpty) {
+        if (isCurrentMessage) initialIndex = items.length;
+        items.add(ImageGalleryItem(
+          imageProvider: CachedNetworkImageProvider(imgUrl, cacheKey: msg.msgID),
+          heroTag: heroTagStr,
+          messageID: msg.msgID,
+          downloadFn: () => _saveImgForMessage(msg, theme),
+        ));
+      } else if (!isNetworkImage && localPath != null && localPath.isNotEmpty) {
+        if (isCurrentMessage) initialIndex = items.length;
+        items.add(ImageGalleryItem(
+          imageProvider: FileImage(File(localPath)),
+          heroTag: heroTagStr,
+          messageID: msg.msgID,
+          downloadFn: () => _saveImgForMessage(msg, theme),
+        ));
+      }
+    }
+
+    return (items: items, initialIndex: initialIndex);
   }
 
   V2TimImage? getImageFromList(V2TimImageTypesEnum imgType) {
@@ -367,8 +482,8 @@ class _TIMUIKitImageElem extends TIMUIKitState<TIMUIKitImageElem> {
     String? imgUrl,
     String? imgPath,
   }) {
-    if (isNetworkImage) {
-      if (PlatformUtils().isWeb) {
+    if (PlatformUtils().isWeb) {
+      if (isNetworkImage) {
         TUIKitWidePopup.showMedia(
             context: context,
             mediaURL: widget.message.imageElem?.path ?? "",
@@ -376,46 +491,52 @@ class _TIMUIKitImageElem extends TIMUIKitState<TIMUIKitImageElem> {
                   Uri.parse(widget.message.imageElem?.path ?? ""),
                   mode: LaunchMode.externalApplication,
                 ));
-        return;
       }
-      if (PlatformUtils().isDesktop) {
-        _handleOnTapPreviewImageOnDesktop(
-          originImgUrl: imgUrl,
-        );
+      return;
+    }
+    if (PlatformUtils().isDesktop) {
+      if (isNetworkImage) {
+        _handleOnTapPreviewImageOnDesktop(originImgUrl: imgUrl);
       } else {
-        Navigator.of(context).push(
-          PageRouteBuilder(
-              opaque: false,
-              pageBuilder: (_, __, ___) => ImageScreen(
-                  imageProvider: CachedNetworkImageProvider(
-                    imgUrl ?? "",
-                    cacheKey: widget.message.msgID,
-                  ),
-                  heroTag: heroTag,
-                  messageID: widget.message.msgID,
-                  downloadFn: () async {
-                    return await _saveImg(theme);
-                  })),
-        );
-      }
-    } else {
-      if (PlatformUtils().isDesktop) {
         TUIKitWidePopup.showMedia(
-            mediaLocalPath: imgPath, context: context, onClickOrigin: () => launchDesktopFile(imgPath ?? ""));
-      } else {
-        Navigator.of(context).push(
-          PageRouteBuilder(
-            opaque: false, // set to false
-            pageBuilder: (_, __, ___) => ImageScreen(
-                imageProvider: FileImage(File(imgPath ?? "")),
-                heroTag: heroTag,
-                messageID: widget.message.msgID,
-                downloadFn: () async {
-                  return await _saveImg(theme);
-                }),
-          ),
-        );
+            mediaLocalPath: imgPath,
+            context: context,
+            onClickOrigin: () => launchDesktopFile(imgPath ?? ""));
       }
+      return;
+    }
+
+    // 移动端：使用上下翻页的图片画廊
+    final galleryData = _buildImageGalleryItems(theme);
+    if (galleryData.items.isEmpty) {
+      // 降级到单图预览
+      ImageProvider imageProvider;
+      if (isNetworkImage) {
+        imageProvider = CachedNetworkImageProvider(imgUrl ?? "", cacheKey: widget.message.msgID);
+      } else {
+        imageProvider = FileImage(File(imgPath ?? ""));
+      }
+      Navigator.of(context).push(
+        PageRouteBuilder(
+          opaque: false,
+          pageBuilder: (_, __, ___) => ImageScreen(
+            imageProvider: imageProvider,
+            heroTag: heroTag,
+            messageID: widget.message.msgID,
+            downloadFn: () => _saveImg(theme),
+          ),
+        ),
+      );
+    } else {
+      Navigator.of(context).push(
+        PageRouteBuilder(
+          opaque: false,
+          pageBuilder: (_, __, ___) => ImageGalleryScreen(
+            items: galleryData.items,
+            initialIndex: galleryData.initialIndex.clamp(0, galleryData.items.length - 1),
+          ),
+        ),
+      );
     }
   }
 

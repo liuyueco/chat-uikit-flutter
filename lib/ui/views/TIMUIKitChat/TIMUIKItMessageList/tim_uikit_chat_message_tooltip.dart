@@ -268,6 +268,10 @@ class TIMUIKitMessageTooltipState extends TIMUIKitState<TIMUIKitMessageTooltip> 
           return (!PlatformUtils().isWeb) && tooltipsConfig.showDeleteMessage;
         }
         if (type == "multiSelect") {
+          if (tooltipsConfig.canShowMultipleChoiceMessage != null) {
+            return tooltipsConfig.showMultipleChoiceMessage &&
+                tooltipsConfig.canShowMultipleChoiceMessage!(widget.message);
+          }
           return tooltipsConfig.showMultipleChoiceMessage;
         }
 

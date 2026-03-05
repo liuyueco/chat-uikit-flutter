@@ -164,6 +164,9 @@ class ToolTipsConfig {
   /// Whether to show the multiple-choice option for messages.
   bool showMultipleChoiceMessage;
 
+  /// 可选：按消息类型过滤是否显示多选/转发选项。返回 false 时该消息不显示多选入口（如红包消息不可转发）
+  bool Function(V2TimMessage message)? canShowMultipleChoiceMessage;
+
   /// Whether to show the option to delete a message.
   bool showDeleteMessage;
 
@@ -189,6 +192,7 @@ class ToolTipsConfig {
   ToolTipsConfig(
       {this.showDeleteMessage = true,
       this.showMultipleChoiceMessage = true,
+      this.canShowMultipleChoiceMessage,
       this.showRecallMessage = true,
       this.showReplyMessage = true,
       this.showTranslation = true,
@@ -1234,7 +1238,7 @@ class _TIMUIKItHistoryMessageListItemState extends TIMUIKitState<TIMUIKitHistory
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (model.isMultiSelect)
+              if (model.isMultiSelect && (widget.toolTipsConfig?.canShowMultipleChoiceMessage?.call(message) ?? true))
                 Container(
                   margin: EdgeInsets.only(right: 12, top: 10, left: isSelf ? 16 : 0),
                   child: CheckBoxButton(
@@ -1267,6 +1271,10 @@ class _TIMUIKItHistoryMessageListItemState extends TIMUIKitState<TIMUIKitHistory
                     behavior: model.isMultiSelect ? HitTestBehavior.translucent : null,
                     onTap: () {
                       if (model.isMultiSelect) {
+                        if (widget.toolTipsConfig?.canShowMultipleChoiceMessage != null &&
+                            !widget.toolTipsConfig!.canShowMultipleChoiceMessage!(message)) {
+                          return; // 该消息不可多选（如红包），忽略点击
+                        }
                         final checked = model.getSelectedMessageList().contains(message);
                         model.setMessageItemChecked(message, !checked);
                       } else {
